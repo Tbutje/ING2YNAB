@@ -4,7 +4,7 @@ class RowReader(object):
     ms_row = []
     coDiverseBoekingen      = 'DV'
     
-#   not cheded yet    
+#   not checked yet    
     coCrediteurenBetaling   = 'cb'
     coGeldAutomaat          = 'ga'
     coBetaalAutomaat        = 'ba'
