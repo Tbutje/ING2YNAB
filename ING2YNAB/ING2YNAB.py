@@ -1,64 +1,57 @@
 import csv, sys
 from ING2YNAB.RowReader import RowReader
 
+
 class Ing2YNAB(object):
-    
-    mt_data = []   
+    data_in = []
 
     def __init__(self, file_in, dir_out):
-        self.mv_file_in = file_in
-        self.mv_dir_out = dir_out
-        
-        
-        
-        
+        self.file_in = file_in
+        self.dir_out = dir_out
+
     def read(self):
         try:
-            with open(self.mv_file_in) as File:
-#               just to skip first line  
+            with open(self.file_in) as File:
+                #               just to skip first line
                 lv_first_line = File.readline()
-                lr_reader = csv.reader(File)
-                for ls_row in lr_reader:
-                    lr_rowReader = RowReader(ls_row) 
-   
-                    ls_data = { 'date':     lr_rowReader.get_date(),
-                               'payee':     lr_rowReader.get_payee(),
-                               'category':  lr_rowReader.get_category(),
-                                'memo':     lr_rowReader.get_memo(),
-                                'out':      lr_rowReader.get_outflow(),
-                                'in':       lr_rowReader.get_inflow() }
-                    self.mt_data.append(ls_data)
-                        
+                csvReader = csv.reader(File)
+                for row in csvReader:
+                    rowReader = RowReader(row)
+
+                    data_row = {'date': rowReader.get_date(),
+                                'payee': rowReader.get_payee(),
+                                'category': rowReader.get_category(),
+                                'memo': rowReader.get_memo(),
+                                'out': rowReader.get_outflow(),
+                                'in': rowReader.get_inflow()}
+                    self.data_in.append(data_row)
+
         except IOError:
-            sys.exit( "input file error",
-                      "input file not found\nplease check the input file name")
-                
-    
+            sys.exit("input file error",
+                     "input file not found\nplease check the input file name")
     def write(self):
-        ls_data = {}
-        if self.mv_dir_out.find('\\') > 0:
-            lv_filename = self.mv_dir_out + '\\' + 'ING' + '.csv'
+
+        if self.dir_out.find('\\') > 0:
+            filename = self.dir_out + '\\' + 'ING' + '.csv'
         else:
-            lv_filename = self.mv_dir_out + 'ING' + '.csv'
-        
+            filename = self.dir_out + 'ING' + '.csv'
+
         try:
-            with open(lv_filename, 'w+', newline='') as lr_file:
-                lr_writer = csv.writer(lr_file, quoting=csv.QUOTE_NONNUMERIC)
-                
-#                   write header row
-                lr_writer.writerow([ 'Date' , 'Payee' , 'Category' , \
-                                  'Memo' , 'Outflow' , 'Inflow' ])
-            
-#                   write the rest
-                for jdx, ls_data in enumerate(self.mt_data):
-                    lr_writer.writerow([ls_data.get('date'), \
-                                        ls_data.get('payee'), \
-                                        ls_data.get('category'), \
-                                        ls_data.get('memo'), \
-                                        ls_data.get('out'), \
-                                        ls_data.get('in')])
+            data_row = {}
+            with open(filename, 'w+', newline='') as file:
+                lr_writer = csv.writer(file, quoting=csv.QUOTE_NONNUMERIC)
+
+                #                   write header row
+                lr_writer.writerow(['Date', 'Payee', 'Category',
+                                    'Memo', 'Outflow', 'Inflow'])
+
+                #                   write the rest
+                for jdx, data_row in enumerate(self.data_in):
+                    lr_writer.writerow([data_row.get('date'),
+                                        data_row.get('payee'),
+                                        data_row.get('category'),
+                                        data_row.get('memo'),
+                                        data_row.get('out'),
+                                        data_row.get('in')])
         except IOError:
-            sys.exit( "Output file error" )
-    
-      
-        
+            sys.exit("Output file error")
