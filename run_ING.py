@@ -4,15 +4,12 @@ from ING2YNAB.ING2YNAB import Ing2YNAB
 
 if __name__ == '__main__':
     if len(sys.argv) > 1:
-        lv_filename_in = sys.argv[1]
-        lv_dir_out = sys.argv[2]
+        filename_in = sys.argv[1]
+        dir_out = sys.argv[2]
     elif len(sys.argv) == 1:
-        lv_filename_in = os.path.dirname(sys.argv[0]) + '\\transactions.csv'
-        lv_dir_out = os.path.dirname(sys.argv[0]) 
+        filename_in = os.path.dirname(sys.argv[0]) + '\\transactions.csv'
+        dir_out = os.path.dirname(sys.argv[0])
 
-    lr_converter = Ing2YNAB(lv_filename_in, lv_dir_out)
-    lr_converter.read()
-    lr_converter.write()
-    
-    
-                
+    converter = Ing2YNAB(filename_in, dir_out)
+    converter.read()
+    converter.write()
