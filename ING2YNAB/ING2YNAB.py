@@ -1,4 +1,6 @@
-import csv, sys
+import csv
+import sys
+
 from ING2YNAB.RowReader import RowReader
 
 
@@ -29,12 +31,10 @@ class Ing2YNAB(object):
         except IOError:
             sys.exit("input file error",
                      "input file not found\nplease check the input file name")
+
     def write(self):
 
-        if self.dir_out.find('\\') > 0:
-            filename = self.dir_out + '\\' + 'ING' + '.csv'
-        else:
-            filename = self.dir_out + 'ING' + '.csv'
+        filename = self.dir_out
 
         try:
             data_row = {}
