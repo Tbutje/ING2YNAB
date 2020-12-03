@@ -1,9 +1,8 @@
+import os
 import argparse
 import os
-from ING2YNAB.ING2YNAB import Ing2YNAB
-import os
 
-from ING2YNAB.ING2YNAB import Ing2YNAB
+from ing2ynab.Ing2ynab import Ing2ynab
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -12,8 +11,8 @@ if __name__ == '__main__':
     parser.add_argument('-o', '--output', help='output file, default ING.csv', type=str, nargs='?',
                         default=os.path.join(os.getcwd(), "ING.csv"))
     args = parser.parse_args()
-    print(args)
+    print("Converting file: " + args.input)
 
-    converter = Ing2YNAB(args.input, args.output)
-    converter.read()
-    converter.write()
+    converter = Ing2ynab.fromfilename(args.input)
+    converter.convert()
+    converter.to_csv(args.output)

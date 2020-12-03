@@ -2,7 +2,7 @@ from distutils.core import setup
 
 setup(
     # Application name:
-    name="ING2YNAB",
+    name="ing2ynab",
 
     # Version number (initial):
     version="0.0.1",
@@ -11,7 +11,7 @@ setup(
     author="Timo Koole",
 
     # Packages
-    packages=["ING2YNAB"],
+    packages=["ing2ynab"],
 
     # Include additional files into the package
     # include_package_data=True,
