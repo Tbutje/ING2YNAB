@@ -5,11 +5,10 @@ from ing2ynab.RowReader import RowReader
 
 
 class Ing2ynab(object):
-    data_out = []
-    data_in = []
 
     def __init__(self, data):
         self.data_in = data
+        self.data_out = []
 
     @classmethod
     def fromfilename(cls, file_in):
@@ -55,7 +54,7 @@ class Ing2ynab(object):
                 #                   write the rest
                 for jdx, data_row in enumerate(self.data_out):
                     lr_writer.writerow([data_row.get('Date'),
-                                        data_row.get('payee'),
+                                        data_row.get('Payee'),
                                         data_row.get('Category'),
                                         data_row.get('Memo'),
                                         data_row.get('Outflow'),
